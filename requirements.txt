@@ -1,2 +1,0 @@
-# We use a fork, ideally use https://github.com/luismartingarcia/protocol.git when merged
-git+https://github.com/cabo/protocol

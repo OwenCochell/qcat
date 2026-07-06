@@ -22,3 +22,9 @@ report.xml
 /versioned/
 /.vscode/
 !requirements.txt
+
+# CMake / protobuf codegen
+/build/
+/cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
