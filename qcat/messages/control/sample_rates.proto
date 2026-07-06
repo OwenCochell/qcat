@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+/// Reply for GetSampleRates. The payload is a nested dict
+/// (dac/adc -> tile -> rate in Msps), carried as JSON since the
+/// structure is dynamic. Mirrors the GetCfg blob approach.
+message SampleRatesReply {
+    string json = 1;
+}

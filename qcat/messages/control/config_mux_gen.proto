@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message ConfigMuxGen {
+    /// Generator channel (index in 'gens' list)
+    uint32 channel = 1;
+
+    /// Tones to configure: a list of dicts from QickConfig.calc_muxgen_regs().
+    /// Carried as a CBOR/JSON-encoded blob (dynamic structure, not numeric).
+    bytes tones = 2;
+}

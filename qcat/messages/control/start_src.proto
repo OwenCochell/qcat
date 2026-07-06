@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+/// tProc start source.
+enum StartSource {
+    INTERNAL = 0;
+    EXTERNAL = 1;
+}
+
+message StartSrc {
+    /// Start source for the tProc
+    StartSource src = 1;
+}

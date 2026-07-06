@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message EnableBuf {
+    /// Readout channel to configure
+    uint32 channel = 1;
+
+    /// Enable accumulated data capture.
+    /// Optional: the API default is true.
+    optional bool enable_avg = 2;
+
+    /// Enable decimated data capture.
+    /// Optional: the API default is true.
+    optional bool enable_buf = 3;
+}

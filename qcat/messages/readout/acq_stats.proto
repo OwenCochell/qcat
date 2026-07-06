@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package qcat.messages.readout;
+
+/// Per-packet acquisition statistics, mirroring the streamer's
+/// stats tuple (elapsed, shots, addr, newshots).
+message AcqStats {
+    /// Seconds elapsed since the readout started (time.time() - t_start)
+    double elapsed = 1;
+
+    /// Current value of the shot counter at this transfer
+    uint64 shots = 2;
+
+    /// Buffer address of this transfer
+    uint64 addr = 3;
+
+    /// Number of new shots in this packet (also the packet's "length")
+    uint64 new_shots = 4;
+}

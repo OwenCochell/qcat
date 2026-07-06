@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package qcat.services;
+
+import "qcat/messages/common/empty.proto";
+import "qcat/messages/common/ack.proto";
+import "qcat/messages/common/int64_reply.proto";
+import "qcat/messages/tproc/tproc_single_read.proto";
+import "qcat/messages/tproc/tproc_single_write.proto";
+import "qcat/messages/tproc/tproc_set_lfsr_cfg.proto";
+
+/// Group 5 — tProc sub-object (direct soc.tproc.* calls).
+/// A single unified surface over the v1 and v2 driver classes.
+service Tproc {
+    rpc TprocStart(qcat.messages.common.Empty) returns (qcat.messages.common.Ack);
+    rpc TprocSingleRead(qcat.messages.tproc.TprocSingleRead) returns (qcat.messages.common.Int64Reply);
+    rpc TprocSingleWrite(qcat.messages.tproc.TprocSingleWrite) returns (qcat.messages.common.Ack);
+
+    /// tProc v2 only.
+    rpc TprocSetLfsrCfg(qcat.messages.tproc.TprocSetLfsrCfg) returns (qcat.messages.common.Ack);
+}

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package qcat.services;
+
+import "qcat/messages/array_frame.proto";
+import "qcat/messages/read/read_data.proto";
+import "qcat/messages/read/memory.proto";
+import "qcat/messages/read/ddr4_buff.proto";
+import "qcat/messages/read/mr_buff.proto";
+
+/// Group 3 — bulk array reads.
+/// Each read is server-streaming: the server emits one ArrayDef frame (the
+/// descriptor) followed by bounded ArrayChunk frames. No single frame carries
+/// the whole buffer, so arrays of any size (DDR4 reaches 4 GB) stay under
+/// gRPC's per-message limit without a side channel.
+service Read {
+    rpc GetDecimated(qcat.messages.read.ReadData) returns (stream qcat.messages.ArrayFrame);
+    rpc GetAccumulated(qcat.messages.read.ReadData) returns (stream qcat.messages.ArrayFrame);
+    rpc GetDdr4(qcat.messages.read.DDR4Buff) returns (stream qcat.messages.ArrayFrame);
+    rpc GetMr(qcat.messages.read.MRBuff) returns (stream qcat.messages.ArrayFrame);
+    rpc ReadMem(qcat.messages.read.ReadMemory) returns (stream qcat.messages.ArrayFrame);
+}

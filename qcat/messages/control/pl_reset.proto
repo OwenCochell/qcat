@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message PlReset {
+    /// Re-run block startup/initialization after the reset.
+    /// Optional: the API default is true.
+    optional bool reinit = 1;
+}

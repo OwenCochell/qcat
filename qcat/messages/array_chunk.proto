@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package qcat.messages;
+
+/// One bounded slice of an array's raw buffer.
+///
+/// The producer sizes each chunk well under gRPC's per-message limit (e.g.
+/// 1 MiB); the reassembled array may be arbitrarily large across many chunks.
+/// Reinterpret the concatenation of all chunks per the preceding ArrayDef.
+message ArrayChunk {
+    /// Raw bytes for this slice.
+    bytes data = 1;
+
+    /// Byte offset of this slice into the reassembled buffer.
+    /// Redundant on an ordered gRPC stream, but allows integrity checks.
+    uint64 offset = 2;
+}

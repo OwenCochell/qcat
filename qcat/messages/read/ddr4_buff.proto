@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package qcat.messages.read;
+
+message DDR4Buff {
+    /// Number of data transfers to retrieve (maps to get_ddr4's `nt`)
+    uint32 num_trans = 1;
+
+    /// Number of samples to skip at the start of the buffer.
+    /// Optional: absence means None (skip the stale prefix without
+    /// incrementing the end address).
+    optional uint64 start = 2;
+}

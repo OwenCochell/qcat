@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package qcat.messages;
+
+enum MemoryType {
+    // Sentinel: field left unset. The server applies the API default
+    // (mem_sel='dmem'). proto3 enums default to 0, so this must be 0 to
+    // avoid silently meaning PMEM when the client omits the field.
+    MEMORY_TYPE_UNSPECIFIED = 0;
+    PMEM = 1;  // Program Memory
+    DMEM = 2;  // Data Memory
+    WMEM = 3;  // Weight Memory
+}

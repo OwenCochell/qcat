@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package qcat.messages.bootstrap;
+
+/// Encoding of a serialized config blob.
+enum CfgEncoding {
+    CBOR = 0;
+    JSON = 1;
+}
+
+/// Reply for GetCfg (the required first call).
+///
+/// The QICK config is a dynamic, deeply nested dict, so it is carried as an
+/// opaque blob rather than a rigid protobuf schema. The client decodes `data`
+/// per `encoding` and builds its local QickConfig (soccfg) from it.
+message CfgReply {
+    /// How `data` is serialized.
+    CfgEncoding encoding = 1;
+
+    /// Serialized config dictionary.
+    bytes data = 2;
+}

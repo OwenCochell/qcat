@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package qcat.messages.tproc;
+
+import "qcat/messages/memory_type.proto";
+
+/// Read one word of tProc memory via AXI (soc.tproc.single_read).
+/// Unifies v1 (addr only) and v2 (mem_sel, addr); returns common.Int64Reply.
+message TprocSingleRead {
+    /// Memory to read. Used by tProc v2; ignored by v1 (data memory only).
+    qcat.messages.MemoryType memory = 1;
+
+    /// Reading address
+    uint64 address = 2;
+}

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package qcat.messages.readout;
+
+/// Starts a background streaming readout of the accumulated buffers.
+/// Stateful: the server spins up a worker thread; data is then drained via
+/// the PollData server-streaming RPC.
+message StartReadout {
+    /// Final value expected for the shot counter
+    uint32 total_shots = 1;
+
+    /// Data-memory address for the shot counter.
+    /// Optional: the API default is 1.
+    optional uint32 counter_addr = 2;
+
+    /// Readout channels to stream.
+    /// Empty means None (the server uses the default [0, 1]).
+    repeated uint32 ch_list = 3;
+
+    /// Number of data points to expect per counter increment.
+    /// Empty means the default (1 per channel); a single value broadcasts to
+    /// every channel; otherwise one entry per ch_list channel.
+    repeated uint32 reads_per_shot = 4;
+
+    /// Number of measurements to transfer at a time.
+    /// Optional: absence means None (the server picks ~10% of the smallest
+    /// buffer, minimum 1).
+    optional uint32 stride = 5;
+}

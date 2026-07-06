@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message ConfigBuf {
+    /// Readout channel to configure
+    uint32 channel = 1;
+
+    /// Starting address of buffer (default 0)
+    uint64 address = 2;
+
+    /// Length of buffer (how many samples to take).
+    /// Optional: the API default is 1.
+    optional uint32 length = 3;
+}

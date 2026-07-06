@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package qcat.services;
+
+import "qcat/messages/common/empty.proto";
+import "qcat/messages/common/ack.proto";
+import "qcat/messages/load/load_bin_frame.proto";
+import "qcat/messages/load/load_memory_frame.proto";
+import "qcat/messages/load/load_data_frame.proto";
+
+/// Group 2 (loads) — bulk uploads to program / data / waveform memory.
+/// Each upload is a client-streaming RPC: the first message carries params,
+/// then an ArrayDef descriptor, then bounded ArrayChunk frames. No single
+/// message holds the whole array, so uploads stay under gRPC's per-message
+/// limit without a side channel.
+service Load {
+    rpc LoadBinProgram(stream qcat.messages.load.LoadBinFrame) returns (qcat.messages.common.Ack);
+    rpc LoadMem(stream qcat.messages.load.LoadMemoryFrame) returns (qcat.messages.common.Ack);
+    rpc LoadEnvelope(stream qcat.messages.load.LoadDataFrame) returns (qcat.messages.common.Ack);
+    rpc LoadWeights(stream qcat.messages.load.LoadDataFrame) returns (qcat.messages.common.Ack);
+
+    /// Reload waveform/data memory from the last-loaded program (no payload).
+    rpc ReloadMem(qcat.messages.common.Empty) returns (qcat.messages.common.Ack);
+}

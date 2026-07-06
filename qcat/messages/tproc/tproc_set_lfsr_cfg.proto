@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package qcat.messages.tproc;
+
+/// LFSR stepping mode (soc.tproc.set_lfsr_cfg).
+enum LfsrMode {
+    LFSR_DISABLED = 0;
+    LFSR_FREE_RUNNING = 1;
+    LFSR_STEP_ON_S1_READ = 2;
+    LFSR_STEP_ON_S0_WRITE = 3;
+}
+
+/// Configure the LFSR mode. tProc v2 only; returns common.Ack.
+message TprocSetLfsrCfg {
+    /// LFSR mode
+    LfsrMode mode = 1;
+
+    /// Core index to configure (default 0)
+    uint32 core = 2;
+}

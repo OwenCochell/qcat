@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package qcat.messages.read;
+
+message MRBuff {
+    /// Number of samples to skip at the start of the buffer.
+    /// Optional: absence means None (skip the stale prefix).
+    optional uint64 start = 1;
+}

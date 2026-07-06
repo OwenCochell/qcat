@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package qcat.services;
+
+import "qcat/messages/common/empty.proto";
+import "qcat/messages/common/ack.proto";
+import "qcat/messages/common/int64_reply.proto";
+import "qcat/messages/common/bool_reply.proto";
+import "qcat/messages/common/float_reply.proto";
+import "qcat/messages/control/set_nyquist.proto";
+import "qcat/messages/control/set_mixer_freq.proto";
+import "qcat/messages/control/config_mux_gen.proto";
+import "qcat/messages/control/set_iq.proto";
+import "qcat/messages/control/configure_readout.proto";
+import "qcat/messages/control/config_mux_readout.proto";
+import "qcat/messages/control/config_avg.proto";
+import "qcat/messages/control/config_buf.proto";
+import "qcat/messages/control/enable_buf.proto";
+import "qcat/messages/control/start_src.proto";
+import "qcat/messages/control/stop_tproc.proto";
+import "qcat/messages/control/clear_tproc_counter.proto";
+import "qcat/messages/control/get_tproc_counter.proto";
+import "qcat/messages/control/set_adc_attenuator.proto";
+import "qcat/messages/control/get_adc_attenuator.proto";
+import "qcat/messages/control/freeze_adc_cals.proto";
+import "qcat/messages/control/unfreeze_adc_cals.proto";
+import "qcat/messages/control/pl_reset.proto";
+import "qcat/messages/control/clear_ddr4.proto";
+import "qcat/messages/control/arm_ddr4.proto";
+import "qcat/messages/control/arm_mr.proto";
+import "qcat/messages/control/sample_rates.proto";
+
+/// Group 2 — config / control commands (unary; empty/ack or scalar reply).
+service Control {
+    // Generator / mixer config
+    rpc SetNyquist(qcat.messages.control.SetNyquist) returns (qcat.messages.common.Ack);
+    rpc SetMixerFreq(qcat.messages.control.SetMixerFreq) returns (qcat.messages.common.Ack);
+    rpc ConfigMuxGen(qcat.messages.control.ConfigMuxGen) returns (qcat.messages.common.Ack);
+    rpc SetIQ(qcat.messages.control.SetIQ) returns (qcat.messages.common.Ack);
+    rpc ResetGens(qcat.messages.common.Empty) returns (qcat.messages.common.Ack);
+
+    // Readout / buffer config
+    rpc ConfigureReadout(qcat.messages.control.ConfigureReadout) returns (qcat.messages.common.Ack);
+    rpc ConfigMuxReadout(qcat.messages.control.ConfigMuxReadout) returns (qcat.messages.common.Ack);
+    rpc ConfigAvg(qcat.messages.control.ConfigAvg) returns (qcat.messages.common.Ack);
+    rpc ConfigBuf(qcat.messages.control.ConfigBuf) returns (qcat.messages.common.Ack);
+    rpc EnableBuf(qcat.messages.control.EnableBuf) returns (qcat.messages.common.Ack);
+
+    // tProc start / stop / counter
+    rpc StartSrc(qcat.messages.control.StartSrc) returns (qcat.messages.common.Ack);
+    rpc StartTproc(qcat.messages.common.Empty) returns (qcat.messages.common.Ack);
+    rpc StopTproc(qcat.messages.control.StopTproc) returns (qcat.messages.common.Ack);
+    rpc PrepareRound(qcat.messages.common.Empty) returns (qcat.messages.common.Ack);
+    rpc CleanupRound(qcat.messages.common.Empty) returns (qcat.messages.common.Ack);
+    rpc ClearTprocCounter(qcat.messages.control.ClearTprocCounter) returns (qcat.messages.common.Ack);
+    rpc GetTprocCounter(qcat.messages.control.GetTprocCounter) returns (qcat.messages.common.Int64Reply);
+
+    // ADC attenuator / calibration
+    rpc SetAdcAttenuator(qcat.messages.control.SetAdcAttenuator) returns (qcat.messages.common.FloatReply);
+    rpc GetAdcAttenuator(qcat.messages.control.GetAdcAttenuator) returns (qcat.messages.common.FloatReply);
+    rpc FreezeAdcCals(qcat.messages.control.FreezeAdcCals) returns (qcat.messages.common.Ack);
+    rpc UnfreezeAdcCals(qcat.messages.control.UnfreezeAdcCals) returns (qcat.messages.common.Ack);
+
+    // Clocks / rates / reset
+    rpc ClocksLocked(qcat.messages.common.Empty) returns (qcat.messages.common.BoolReply);
+    rpc GetSampleRates(qcat.messages.common.Empty) returns (qcat.messages.control.SampleRatesReply);
+    rpc PlReset(qcat.messages.control.PlReset) returns (qcat.messages.common.Ack);
+
+    // DDR4 / MR buffers
+    rpc ClearDdr4(qcat.messages.control.ClearDdr4) returns (qcat.messages.common.Ack);
+    rpc ArmDdr4(qcat.messages.control.ArmDdr4) returns (qcat.messages.common.Ack);
+    rpc ArmMr(qcat.messages.control.ArmMr) returns (qcat.messages.common.Ack);
+}

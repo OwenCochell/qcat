@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message FreezeAdcCals {
+    /// List of RF-ADC IDs (2-digit strings) to freeze calibration on
+    repeated string blocknames = 1;
+}

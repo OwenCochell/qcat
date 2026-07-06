@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package qcat.messages.load;
+
+import "qcat/messages/load/load_data.proto";
+import "qcat/messages/array_def.proto";
+import "qcat/messages/array_chunk.proto";
+
+/// Client-streaming upload frame for LoadEnvelope / LoadWeights.
+/// Stream order: `params` once (first), then `def` once (the int16 (I, Q)
+/// array descriptor), then one or more bounded `chunk` frames. No single frame
+/// holds the whole array, so it stays under the gRPC per-message limit.
+message LoadDataFrame {
+    oneof body {
+        LoadData params = 1;
+        qcat.messages.ArrayDef def = 2;
+        qcat.messages.ArrayChunk chunk = 3;
+    }
+}

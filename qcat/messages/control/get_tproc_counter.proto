@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message GetTprocCounter {
+    /// Counter address
+    uint64 address = 1;
+}

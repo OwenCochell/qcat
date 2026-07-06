@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package qcat.messages;
+
+/// Element type of the raw buffer.
+enum DType {
+    DT_INT16 = 0;    // envelope/weights, decimated
+    DT_INT32 = 1;    // dmem, load_mem, binprog (tProc v2)
+    DT_INT64 = 2;    // accumulated
+    DT_FLOAT32 = 3;  // decimated (float)
+    DT_FLOAT64 = 4;
+    DT_UINT16 = 5;
+    DT_UINT32 = 6;
+    DT_UINT64 = 7;   // binprog (tProc v1)
+}
+
+/// Byte order of the raw buffer.
+enum ByteOrder {
+    LITTLE = 0;
+    BIG = 1;
+}
+
+/// Compression applied to the raw buffer.
+enum Compression {
+    NONE = 0;
+    ZSTD = 1;
+}
+
+/// Descriptor for a streamed array: dtype, shape, and encoding, but NO data.
+///
+/// Sent once, ahead of the byte chunks (see ArrayChunk / ArrayFrame). Because
+/// it carries no buffer, this message is tiny regardless of array size, so the
+/// gRPC per-message limit never applies to the descriptor.
+message ArrayDef {
+    /// Element type of the buffer.
+    DType dtype = 1;
+
+    /// Logical shape, e.g. [reps, trigs, 2] (last dim is I/Q).
+    repeated uint32 shape = 2;
+
+    /// Byte order of the buffer (default LITTLE).
+    ByteOrder order = 3;
+
+    /// Compression applied to the buffer (default NONE).
+    Compression compression = 4;
+
+    /// Total bytes that will follow across all chunks (post-compression).
+    /// Lets the receiver preallocate and verify reassembly. 0 = unknown.
+    uint64 byte_length = 5;
+}

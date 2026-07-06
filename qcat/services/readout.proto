@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package qcat.services;
+
+import "qcat/messages/common/ack.proto";
+import "qcat/messages/readout/start_readout.proto";
+import "qcat/messages/readout/poll_data.proto";
+import "qcat/messages/readout/data_packet.proto";
+
+/// Group 4 — streaming readout.
+/// Kept as two RPCs mirroring the current API: StartReadout arms the background
+/// worker, then PollData drains it as a server stream of DataPacket messages.
+service Readout {
+    rpc StartReadout(qcat.messages.readout.StartReadout) returns (qcat.messages.common.Ack);
+    rpc PollData(qcat.messages.readout.PollData) returns (stream qcat.messages.readout.DataPacket);
+}

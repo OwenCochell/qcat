@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message ConfigMuxReadout {
+    /// Firmware path of the PFB readout being configured
+    string pfbpath = 1;
+
+    /// Readout chains to configure: a list of dicts from
+    /// QickConfig.calc_pfbro_regs(). Carried as a CBOR/JSON-encoded blob.
+    bytes cfgs = 2;
+
+    /// Output selection (if supported).
+    /// Optional: absence means None (server defaults to 'product').
+    optional string sel = 3;
+}

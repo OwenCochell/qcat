@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message SetNyquist {
+    /// DAC channel (index in 'gens' list)
+    uint32 channel = 1;
+
+    /// Nyquist zone
+    uint32 nqz = 2;
+
+    /// Force the change even if already in this zone
+    bool force = 3;
+}

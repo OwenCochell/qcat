@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package qcat.messages.common;
+
+/// Scalar bool reply (e.g. ClocksLocked).
+message BoolReply {
+    bool value = 1;
+}

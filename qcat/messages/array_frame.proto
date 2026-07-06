@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package qcat.messages;
+
+import "qcat/messages/array_def.proto";
+import "qcat/messages/array_chunk.proto";
+
+/// One frame of a streamed array transfer.
+///
+/// The stream carries exactly one `def` frame first (the descriptor), followed
+/// by one or more `chunk` frames (bounded byte slices). No single frame holds
+/// the whole buffer, so arrays of any size stay under the per-message limit
+/// without a side channel.
+message ArrayFrame {
+    oneof body {
+        ArrayDef def = 1;
+        ArrayChunk chunk = 2;
+    }
+}

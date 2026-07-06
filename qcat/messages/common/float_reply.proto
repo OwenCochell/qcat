@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package qcat.messages.common;
+
+/// Scalar floating-point reply (e.g. GetAdcAttenuator, SetAdcAttenuator's
+/// rounded value). double to match Python float precision.
+message FloatReply {
+    double value = 1;
+}

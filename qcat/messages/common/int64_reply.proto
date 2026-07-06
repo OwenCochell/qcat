@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package qcat.messages.common;
+
+/// Scalar int64 reply (e.g. GetTprocCounter).
+message Int64Reply {
+    int64 value = 1;
+}

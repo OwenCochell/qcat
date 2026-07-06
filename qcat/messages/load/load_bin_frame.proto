@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package qcat.messages.load;
+
+import "qcat/messages/load/load_bin.proto";
+import "qcat/messages/memory_type.proto";
+import "qcat/messages/array_def.proto";
+import "qcat/messages/array_chunk.proto";
+
+/// Client-streaming upload frame for LoadBinProgram.
+///
+/// Stream order: `params` once (first), then, for each memory to load, a
+/// `section` frame (which memory + its array descriptor) followed by that
+/// section's bounded `chunk` frames.
+///
+/// tProc v1: binprog is one uint64 array -> a single section with
+///   `memory` = UNSPECIFIED.
+/// tProc v2: binprog is a {pmem, dmem, wmem} dict of int32 arrays -> one
+///   section per populated memory, tagged so the server routes each correctly.
+message LoadBinFrame {
+    /// Begins a memory section: its target and array descriptor.
+    message Section {
+        /// Target memory (v2). UNSPECIFIED for v1's single array.
+        qcat.messages.MemoryType memory = 1;
+
+        /// Descriptor for this section's array.
+        qcat.messages.ArrayDef def = 2;
+    }
+
+    oneof body {
+        LoadBin params = 1;
+        Section section = 2;
+        qcat.messages.ArrayChunk chunk = 3;
+    }
+}

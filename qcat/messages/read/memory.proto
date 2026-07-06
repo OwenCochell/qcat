@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package qcat.messages.read;
+import "qcat/messages/memory_type.proto";
+
+message ReadMemory {
+    /// Type of memory to read
+    MemoryType memory = 1;
+    
+    /// Number of words to read
+    uint32 length = 2;
+
+    /// Starting read address (maps to read_mem's `addr`, default 0)
+    uint64 address = 3;
+}

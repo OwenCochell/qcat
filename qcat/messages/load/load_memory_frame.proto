@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package qcat.messages.load;
+
+import "qcat/messages/load/load_memory.proto";
+import "qcat/messages/array_def.proto";
+import "qcat/messages/array_chunk.proto";
+
+/// Client-streaming upload frame for LoadMem.
+/// Stream order: `params` once (first), then `def` once (the int32 memory-block
+/// descriptor), then one or more bounded `chunk` frames.
+message LoadMemoryFrame {
+    oneof body {
+        LoadMemory params = 1;
+        qcat.messages.ArrayDef def = 2;
+        qcat.messages.ArrayChunk chunk = 3;
+    }
+}

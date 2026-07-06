@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package qcat.messages.common;
+
+/// Empty acknowledgement for control commands that return no value.
+/// A distinct type (vs. reusing Empty) so status/error fields can be
+/// added later without breaking the wire contract.
+message Ack {}

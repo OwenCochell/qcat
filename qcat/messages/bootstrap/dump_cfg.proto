@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package qcat.messages.bootstrap;
+
+/// Reply for DumpCfg — a JSON description of the QICK config.
+///
+/// Convenience only: derivable client-side from CfgReply (encoding=JSON),
+/// so this RPC is optional. Note the server-side `gen_file_path` argument of
+/// dump_cfg() is intentionally omitted — writing a file on the server is not
+/// meaningful over the wire; the client saves the returned string itself.
+message DumpCfgReply {
+    string json = 1;
+}

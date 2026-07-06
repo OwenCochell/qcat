@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package qcat.messages.readout;
+
+import "qcat/messages/array_def.proto";
+import "qcat/messages/readout/acq_stats.proto";
+
+/// One streamed chunk from the readout worker.
+///
+/// The streamer produces one accumulated array per readout channel (acc_buf),
+/// and channels may differ in reads_per_shot, so the payload is one ChannelData
+/// per channel, ordered to match the ch_list given to StartReadout.
+///
+/// Unlike bulk reads/loads, a readout packet is inherently bounded: the worker
+/// transfers at most `stride` shots at a time and errors if that would overflow
+/// the averages buffer (streamer.py). So its data rides inline rather than
+/// being cross-message chunked. Keep `stride` sized so a packet stays under the
+/// gRPC per-message limit (raising max_message_length gives extra margin).
+message DataPacket {
+    /// Accumulated data for one readout channel.
+    message ChannelData {
+        /// Array descriptor (dtype/shape/encoding).
+        qcat.messages.ArrayDef def = 1;
+
+        /// Raw buffer for this channel (bounded by stride).
+        bytes data = 2;
+    }
+
+    /// One entry per readout channel, ordered by StartReadout.ch_list.
+    repeated ChannelData data = 1;
+
+    /// Acquisition statistics for this packet.
+    AcqStats stats = 2;
+}

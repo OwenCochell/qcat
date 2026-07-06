@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message SetIQ {
+    /// DAC channel (index in 'gens' list)
+    uint32 channel = 1;
+
+    /// Frequency (in MHz)
+    double freq = 2;
+
+    /// I value (in range -1 to 1)
+    double i = 3;
+
+    /// Q value (in range -1 to 1)
+    double q = 4;
+
+    /// Readout channel for frequency matching.
+    /// Optional: absence means None.
+    optional uint32 ro_ch = 5;
+
+    /// If the frequency changes, also reset the phase.
+    /// Optional: the API default is true.
+    optional bool phase_reset = 6;
+}

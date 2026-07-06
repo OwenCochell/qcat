@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message ArmDdr4 {
+    /// Readout channel to record (index in 'readouts' list)
+    uint32 channel = 1;
+
+    /// Number of data transfers to record (maps to arm_ddr4's `nt`)
+    uint32 num_trans = 2;
+
+    /// Allow an acquisition that exceeds DDR4 capacity (circular buffer)
+    bool force_overwrite = 3;
+}

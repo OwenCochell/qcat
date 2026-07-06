@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message ClearDdr4 {
+    /// Number of samples to clear from the start of the buffer.
+    /// Optional: absence means None (clear the entire buffer).
+    optional uint64 length = 1;
+}

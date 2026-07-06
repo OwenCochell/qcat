@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package qcat.messages.readout;
+
+/// Request to drain the streamer. Models the current poll_data() knobs; in the
+/// server-streaming design the server emits DataPacket messages as the worker
+/// produces them, using these as stop conditions for the stream.
+message PollData {
+    /// How long to acquire data, in seconds.
+    /// Optional: the API default is 0.1. A negative value means "ignore total
+    /// time and count, read until timeout."
+    optional double totaltime = 1;
+
+    /// How long to wait for the next packet, in seconds.
+    /// Optional: absence means None (wait forever).
+    optional double timeout = 2;
+}

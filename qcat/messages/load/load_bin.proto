@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package qcat.messages.load;
+
+message LoadBin {
+    /// Flag to indicate whether to load memory or not.
+    /// Optional: the API default is true, so absence must be distinguishable
+    /// from an explicit false (proto3 bool defaults to false).
+    optional bool load_mem = 1;
+}

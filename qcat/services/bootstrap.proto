@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package qcat.services;
+
+import "qcat/messages/common/empty.proto";
+import "qcat/messages/bootstrap/get_cfg.proto";
+import "qcat/messages/bootstrap/dump_cfg.proto";
+
+/// Group 1 — Bootstrap (connect-time).
+/// GetCfg is the required first call; the client builds its local QickConfig
+/// (soccfg) from the returned blob.
+service Bootstrap {
+    rpc GetCfg(qcat.messages.common.Empty) returns (qcat.messages.bootstrap.CfgReply);
+    rpc DumpCfg(qcat.messages.common.Empty) returns (qcat.messages.bootstrap.DumpCfgReply);
+}

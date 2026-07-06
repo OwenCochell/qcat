@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message ConfigAvg {
+    /// Readout channel to configure
+    uint32 channel = 1;
+
+    /// Starting address of buffer (default 0)
+    uint64 address = 2;
+
+    /// Length of buffer (how many samples to integrate).
+    /// Optional: the API default is 1.
+    optional uint32 length = 3;
+
+    /// Enable edge counting (only used if the buffer has an edge counter)
+    bool edge_counting = 4;
+
+    /// High threshold for edge counting.
+    /// Optional: the API default is 1000.
+    optional int32 high_threshold = 5;
+
+    /// Low threshold for edge counting (default 0)
+    int32 low_threshold = 6;
+}

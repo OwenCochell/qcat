@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package qcat.messages.common;
+
+/// Empty request for RPCs that take no arguments
+/// (e.g. ReloadMem, ResetGens, StartTproc, PrepareRound, CleanupRound).
+message Empty {}

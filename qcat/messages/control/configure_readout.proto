@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message ConfigureReadout {
+    /// Readout channel (index in 'readouts' list)
+    uint32 channel = 1;
+
+    /// Readout registers from QickConfig.calc_ro_regs().
+    /// Carried as a CBOR/JSON-encoded blob (dynamic dict, not numeric).
+    bytes ro_regs = 2;
+}

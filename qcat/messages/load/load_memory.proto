@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package qcat.messages.load;
+import "qcat/messages/memory_type.proto";
+
+message LoadMemory {
+    /// Type of memory to load
+    MemoryType memory = 1;
+
+    /// Address of the memory load
+    uint64 address = 2;
+}

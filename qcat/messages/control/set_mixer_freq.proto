@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message SetMixerFreq {
+    /// DAC channel (index in 'gens' list)
+    uint32 channel = 1;
+
+    /// Mixer frequency (in MHz)
+    double freq = 2;
+
+    /// Readout channel for frequency matching.
+    /// Optional: absence means None (do not round to a valid readout freq).
+    optional uint32 ro_ch = 3;
+
+    /// If the frequency changes, also reset the phase.
+    /// Optional: the API default is true.
+    optional bool phase_reset = 4;
+}

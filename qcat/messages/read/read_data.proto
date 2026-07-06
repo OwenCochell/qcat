@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package qcat.messages.read;
+
+message ReadData {
+
+    /// Channel number for data read
+    uint32 channel = 1;
+
+    /// Address of the data read (default 0)
+    uint32 address = 2;
+
+    /// Buffer transfer length.
+    /// Optional: absence means None, letting the server pick the buffer's
+    /// default max length.
+    optional uint32 length = 3;
+}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package qcat.messages.tproc;
+
+import "qcat/messages/memory_type.proto";
+
+/// Write one word of tProc memory via AXI (soc.tproc.single_write).
+/// Unifies v1 (addr, data) and v2 (mem_sel, addr, data); returns common.Ack.
+message TprocSingleWrite {
+    /// Memory to write. Used by tProc v2; ignored by v1 (data memory only).
+    qcat.messages.MemoryType memory = 1;
+
+    /// Writing address (default 0)
+    uint64 address = 2;
+
+    /// Value to be written (a single 32-bit memory word)
+    uint32 data = 3;
+}

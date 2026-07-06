@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message SetAdcAttenuator {
+    /// RF-ADC ID (2-digit string, e.g. "21" for tile 2, block 1)
+    string blockname = 1;
+
+    /// Attenuation value (dB); rounded to nearest valid 1 dB step, 0-27 dB
+    double attenuation = 2;
+}

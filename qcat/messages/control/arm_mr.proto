@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package qcat.messages.control;
+
+message ArmMr {
+    /// Readout channel to record (index in 'readouts' list)
+    uint32 channel = 1;
+}
