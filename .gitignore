@@ -16,7 +16,6 @@ package-lock.json
 report.xml
 *.swp
 .tags
-*.txt
 *.upload
 /.venv/
 /versioned/
