@@ -27,3 +27,10 @@ report.xml
 /cmake-build-*/
 CMakeCache.txt
 CMakeFiles/
+
+# qcat gRPC impl: generated stubs, caches, venv
+/qcat-python/qcat_grpc/_pb/
+/qcat-python/**/__pycache__/
+/qcat-python/*.egg-info/
+/qcat-python/dist/
+venv/
