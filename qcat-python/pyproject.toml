@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=64", "grpcio-tools>=1.60"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qcat-grpc"
+version = "0.1.0"
+description = "gRPC server and QickSoc-compatible client for the qcat QICK protocol"
+requires-python = ">=3.9"
+dependencies = [
+    "grpcio>=1.60",
+    "protobuf>=5.26",
+    "numpy",
+]
+
+[project.optional-dependencies]
+# The client needs qick for QickConfig; the server needs the full QickSoc
+# (which additionally requires pynq, i.e. running on the board).
+qick = ["qick"]
+cbor = ["cbor2"]
+zstd = ["zstandard"]
+test = ["pytest", "grpcio-tools"]
+all =  ["qick", "cbor2", "zstandard", "pytest", "grpcio-tools"]
+
+[project.scripts]
+qcat-server = "qcat_grpc.server:main"
+
+[tool.setuptools.packages.find]
+include = ["qcat_grpc*"]
+
+[tool.setuptools.package-data]
+# generate_stubs.py writes an __init__.py into every generated directory, so the
+# *_pb2.py / *_pb2_grpc.py modules are discovered as ordinary packages and ship
+# automatically. Only the type stubs need to be declared as package data.
+"*" = ["*.pyi"]

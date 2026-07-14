@@ -1,0 +1,7 @@
+# setup.py imports generate_stubs.py at build time, so it must ride along.
+include generate_stubs.py
+
+# Ship the generated stubs in the sdist so a wheel built from it reuses them
+# without needing the .proto schema (which lives at repo-root qcat/, outside
+# this project, and is shared with other-language servers).
+recursive-include qcat_grpc/_pb *.py *.pyi
